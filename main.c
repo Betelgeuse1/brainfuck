@@ -57,7 +57,8 @@ int allocate_new_loop(BrainfuckProgram *bfp) {
 }
 
 void set_value(BrainfuckProgram *bfp, byte value) {
-      *(bfp->values + bfp->index) = value % 256;
+      int tempValue = value < 0 ? 255: value % 256;
+      *(bfp->values + bfp->index) = tempValue;
 }
 
 int get_value(BrainfuckProgram *bfp) {
@@ -169,6 +170,7 @@ int main(int argc, char *argv[]) {
                         }
                         bfp.loop_index++;
                         *(bfp.loops_starts + bfp.loop_index) = i;
+
 				break;
 
 			case EJMP:
@@ -184,10 +186,12 @@ int main(int argc, char *argv[]) {
                               bfp.loop_index--;
 
                         }
+
 				break;
 
 			case PRTC:
                         printf("%c", get_value(&bfp));
+
 				break;
 
 			case GETC:
@@ -195,6 +199,7 @@ int main(int argc, char *argv[]) {
                         byte buf;
                         scanf("%c", &buf);
                         set_value(&bfp, buf);
+
 				break;
                   
 		}
